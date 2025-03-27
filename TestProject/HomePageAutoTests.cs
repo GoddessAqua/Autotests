@@ -38,7 +38,7 @@ public class HomePageAutoTests
     [Test]
     public void RegisterUser()
     {
-        Assert.That(_driver.Title, Is.EqualTo("Automation Exercise"), "home page is not visible successfully");
+        Assert.That(_driver.Title, Is.EqualTo("Automation Exercise"), "Home page is not visible successfully");
         
         _homePage.ClickSignupLoginButton();
         
