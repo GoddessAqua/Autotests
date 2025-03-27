@@ -17,9 +17,8 @@ public class HomePageAutoTests
     [SetUp]
     public void Setup()
     {
-        _driver = new ChromeDriver(); // 1.Launch browser
-    
-        // Driver additional setup
+        _driver = new ChromeDriver();
+        
         _driver.Manage().Window.Maximize();
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(10);
         
@@ -28,7 +27,7 @@ public class HomePageAutoTests
         _signUpPage = new SignUpPage(_driver);
         _accountCreatedPage = new AccountCreatedPage(_driver);
     
-        _driver.Navigate().GoToUrl("https://automationexercise.com"); // 2. Navigate to url 'https://automationexercise.com'
+        _driver.Navigate().GoToUrl("https://automationexercise.com");
     }
 
     /// <summary>
@@ -36,10 +35,10 @@ public class HomePageAutoTests
     /// </summary>
     [Test]
     public void RegisterUser()
-    {
-        Assert.That(_driver.Title, Is.EqualTo("Automation Exercise"), "Home page is not visible successfully");
+    { 
+        Assert.That(_driver.Title, Is.EqualTo("Automation Exercise"), "Home page is not visible successfully"); 
         
-        _homePage.ClickSignupLoginButton();
+        _homePage.ClickSignupLoginButton(); 
         
         Assert.That(_loginPage.IsSignUpHeaderVisible(), Is.EqualTo(true) , "Sign up header is not visible successfully");
         
@@ -51,17 +50,17 @@ public class HomePageAutoTests
         
         Assert.That( _signUpPage.IsAccountInfoHeaderVisible(), Is.EqualTo(true) , "Account Info header is not visible successfully");
         
-        _signUpPage.FillAccountInfo();
+        _signUpPage.FillAccountInfo(); 
         
         Assert.That(_accountCreatedPage.IsAccountCreatedVisible(), Is.EqualTo("ACCOUNT CREATED!") , "Account has not been created successfully");
-       
-       _accountCreatedPage.ClickContinueButton();
-       
-        Assert.That(_homePage.IsUserLoggedIn(), Is.EqualTo($"Logged in as {username}") , "Logged in as username is not visible");
         
-       _homePage.ClickDeleteAccountButton();
-       
-       Assert.That(_homePage.IsAccountDeleted(), Is.EqualTo("ACCOUNT DELETED!") , "Account has not been deleted successfully");
+        _accountCreatedPage.ClickContinueButton(); 
+        
+        Assert.That(_homePage.IsUserLoggedIn(), Is.EqualTo($"Logged in as {username}") , "Logged in as username is not visible"); 
+        
+        _homePage.ClickDeleteAccountButton(); 
+        
+        Assert.That(_homePage.IsAccountDeleted(), Is.EqualTo("ACCOUNT DELETED!") , "Account has not been deleted successfully");
        
        _homePage.ClickContinueButton();
     }
@@ -70,6 +69,6 @@ public class HomePageAutoTests
     public void CloseBrowser()
     {
         _driver.Quit();
-        _driver.Dispose(); // config
+        _driver.Dispose();
     }
 }
