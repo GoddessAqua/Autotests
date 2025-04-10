@@ -15,7 +15,7 @@ public class HomePageAutoTests
     /// Driver initial setup
     /// </summary>
     [SetUp]
-    public void Setup()
+    public async Task Setup()
     {
         _driver = new ChromeDriver();
         
@@ -27,7 +27,7 @@ public class HomePageAutoTests
         _signUpPage = new SignUpPage(_driver);
         _accountCreatedPage = new AccountCreatedPage(_driver);
     
-        _driver.Navigate().GoToUrl("https://automationexercise.com");
+        await _driver.Navigate().GoToUrlAsync("https://automationexercise.com");
     }
 
     /// <summary>
@@ -63,6 +63,40 @@ public class HomePageAutoTests
         Assert.That(_homePage.IsAccountDeleted(), Is.EqualTo("ACCOUNT DELETED!") , "Account has not been deleted successfully");
        
        _homePage.ClickContinueButton();
+    }
+
+    [Test]
+    public void LoginUserWithCorrectEmailAndPassword()
+    { 
+        Assert.That(_driver.Title, Is.EqualTo("Automation Exercise"), "Home page is not visible successfully");
+        
+        _homePage.ClickSignupLoginButton();
+        
+        Assert.That(_loginPage.IsLoginHeaderVisible(), Is.EqualTo(true) , "Login header is not visible successfully");
+
+        _loginPage.Login("testvrcsad@test.com", "qwerty");
+        
+        Assert.That(_homePage.IsUserLoggedIn(), Is.EqualTo($"Logged in as vrcsad") , "Logged in as username is not visible");
+        
+        _homePage.ClickDeleteAccountButton();
+        
+        Assert.That(_homePage.IsAccountDeleted(), Is.EqualTo("ACCOUNT DELETED!") , "Account has not been deleted successfully");
+       
+        _homePage.ClickContinueButton();
+    }
+    
+    [Test]
+    public void LoginUserWithIncorrectEmailAndPassword()
+    { 
+        Assert.That(_driver.Title, Is.EqualTo("Automation Exercise"), "Home page is not visible successfully");
+        
+        _homePage.ClickSignupLoginButton();
+        
+        Assert.That(_loginPage.IsLoginHeaderVisible(), Is.EqualTo(true) , "Login header is not visible successfully");
+
+        _loginPage.Login("test@test.com", "test@test.com");
+        
+        Assert.That(_loginPage.IsIncorrectPasswordErrorVisible(), Is.EqualTo(true) , "Incorrect password error is not visible");
     }
 
     [TearDown]
